@@ -22,35 +22,92 @@ namespace Calc
         {
             char key = e.KeyChar;
 
-            if(!Char.IsDigit(key) )
+            if(!Char.IsDigit(key))
             {
-                if(key != '.' && key != ',')
+                
+                if (key != ',' && key != '-')
                 {
                     e.Handled = true;
                 }
                 else
                 {
-                    if(rtbPodkorennoe.Text.Last() == '.' || rtbPodkorennoe.Text.Last() == ',' || rtbPodkorennoe.Text.Contains('.') ||rtbPodkorennoe.Text.Contains(','))
+                    if(key == '-')
                     {
-                        e.Handled = true;
+
                     }
-                }                
+                    else
+                    {
+                        if (rtbPodkorennoe.Text.Last() == ',' || rtbPodkorennoe.Text.Contains(',') || rtbPodkorennoe.Text == "")
+                        {
+                            e.Handled = true;
+                        }
+                    }                   
+                }
+                            
             }
+           
         }
         private void btnCalc_Click(object sender, EventArgs e)
         {
-            double root = double.Parse(rtbPodkorennoe.Text);          
-            rtbAnswer.Text = SimpleRoot(root).ToString();
+            if(rtbPodkorennoe.Text != string.Empty)
+            {
+                double root = double.Parse(rtbPodkorennoe.Text);
+                if(root>=0)
+                {
+                    rtbAnswer.Text = SimpleRoot(root).ToString();
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Отрицательное подкоренное выражение. Не удалось вычислить арифметический корень.\n Попробуйте вычислить комплексный корень");
+                }                
+            }
+            else
+            {
+                MessageBox.Show("Введите подкоренное выражение");
+            }
         }
-        //Самый обычный корень
+        private void btnAlgebRoot_Click(object sender, EventArgs e)
+        {
+            if (rtbPodkorennoe.Text != string.Empty)
+            {
+                double root = double.Parse(rtbPodkorennoe.Text);
+                if(root > 0)
+                {
+                    var answer = ArifmeticRoot(root);
+                    rtbAnswer.Text = string.Format("+{0}; {1}", answer.Item1, answer.Item2);
+                }
+                else
+                {
+                    if(root == 0)
+                    {
+                        rtbAnswer.Text = "0";
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Введите подкоренное выражение");
+            }
+            
+        }
+        //Самый обычный корень арифметический
         private double SimpleRoot(double root)
         {
             return Math.Sqrt(root);
+        }
+        //Выёбистый алгебраический корень
+        private Tuple<double, double> ArifmeticRoot(double root)
+        {
+            root = Math.Sqrt(root);
+            return new Tuple<double, double>(root, -root);
         }
         private void btnClear_Click(object sender, EventArgs e)
         {
             rtbPodkorennoe.Clear();
             rtbAnswer.Clear();
         }
+
+        
     }
 }

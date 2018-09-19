@@ -1,1 +1,9 @@
 C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Calc.exe.config
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Calc.exe
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Calc.pdb
+C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.csprojResolveAssemblyReference.cache
+C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.Form1.resources
+C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.Properties.Resources.resources
+C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.csproj.GenerateResource.Cache
+C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.exe
+C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.pdb

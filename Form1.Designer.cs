@@ -129,6 +129,7 @@
             this.btnComplexRoot.TabIndex = 8;
             this.btnComplexRoot.Text = "Вычислить комплексные корни";
             this.btnComplexRoot.UseVisualStyleBackColor = true;
+            this.btnComplexRoot.Click += new System.EventHandler(this.btnComplexRoot_Click);
             // 
             // button1
             // 

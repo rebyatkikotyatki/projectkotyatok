@@ -44,30 +44,69 @@ namespace Calc
                             e.Handled = true;
                         }
                     }                   
-                }
-                            
+                }                            
             }
            
         }
-        private async void test()
+        private async Task<Tuple<string, string>> CalcComplexOrAnalRoot(bool typeIsComplex, string expression)
         {
             var b = new QueryBuilder();
-            b.AppId = "RYL6JP-T5L9Y7KKG9"; //Your API key
-            b.Input = "sqrt(a^2+2*a*b+b^2)";
+            //это ключ к API который надо получать у них на сайте, каждый ключ расчитан на 2000 обращений к сайту
+            b.AppId = "3V4XEQ-X7PVP274KW"; //Your API key
+            //b.Input = "sqrt(a^2+2*a*b+b^2)";
+            //b.Input = string.Format("sqrt({0})", expression);
+            b.Input = "sqrt(-10i)";
             var r = new QueryRequest();
             var result = await r.ExecuteAsync(b.QueryUri);
-            foreach (var pod in result.Pods)
+
+            string root1 ="", root2 ="";
+
+            //Эта параша возвращает результат в виде XML файла, который надо парсить            
+            if (result != null)
             {
-                Console.WriteLine(pod.Title);
-                if (pod.SubPods != null)
+                /*
+                Короче если корень из отрицательного то ячейка 6, а если там еще есть i то 7, надо как-то искать нужную колонку
+                по тайтлу скорее всего 
+                 */
+                //if(typeIsComplex)
+                //{
+                //    //Здесь я беру 8ю ячейку в которой должен быть +-корень)
+                //    var pod = result.Pods[7];
+                //    if (pod.SubPods != null)
+                //    {
+                //        //привожу результат в нормальный вид
+                //        root1 = pod.SubPods[0].PlainText;
+                //        root1 = root1.Substring(1+root1.IndexOf((char)8776)); //8776 - знак приближенного
+
+                //        root2 = pod.SubPods[1].PlainText;
+                //        root2 = root2.Replace(" (principal root)", string.Empty);
+                //        root2 = root2.Substring(1 + root2.IndexOf((char)8776));
+                //        MessageBox.Show(root1);
+                //        MessageBox.Show(root2);
+
+                //    }
+                //}
+
+                foreach (var pod in result.Pods)
                 {
-                    foreach (var subPod in pod.SubPods)
+                    Console.WriteLine(pod.Title);
+                    if (pod.SubPods != null)
                     {
-                        
-                        MessageBox.Show(string.Format("Title: {0}    PlainText: {1}", subPod.Title, subPod.PlainText));
+                        foreach (var subPod in pod.SubPods)
+                        {
+                            Console.WriteLine(subPod.Title);
+                            Console.WriteLine(subPod.PlainText);
+                        }
                     }
                 }
             }
+            
+            var exitTask = new Task<Tuple<string,string>>(() =>
+            {
+                return new Tuple<string, string>(root1, root2);
+            });
+            exitTask.Start();
+            return exitTask.Result;
         }
         private void btnCalc_Click(object sender, EventArgs e)
         {
@@ -77,11 +116,6 @@ namespace Calc
                 if(root>=0)
                 {
                     rtbAnswer.Text = SimpleRoot(root).ToString();
-                    test();
-                    
-                    
-                   
-
                 }
                 else
                 {
@@ -134,6 +168,19 @@ namespace Calc
             rtbAnswer.Clear();
         }
 
-        
+        private async void btnComplexRoot_Click(object sender, EventArgs e)
+        {
+            var с = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+            //if (rtbPodkorennoe.Text != string.Empty)
+            //{
+            //    var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+            //    rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Введите подкоренное выражение");
+            //}
+
+        }
     }
 }

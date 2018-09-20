@@ -182,5 +182,53 @@ namespace Calc
             //}
 
         }
+
+        private void bt_ru_Click(object sender, EventArgs e)
+        {
+            btnSimpleRoot.Text = "Вычислить арифметический корень";
+            btnAlgebRoot.Text = "Вычислить арифметический корень";
+            lbAccuracy.Text = "Заданная точность:";
+            btnComplexRoot.Text = "Вычислить комплексные корни";
+            button1.Text = "Вычислить аналитический корень";
+            lbHeader.Text = "Введите подкоренное выражение:";
+            lbAnswer.Text = "Результат:";
+            btnClear.Text = "Сброс";
+        }
+
+        private void bt_eng_Click(object sender, EventArgs e)
+        {
+            btnSimpleRoot.Text = "Calculate the arithmetic root";
+            btnAlgebRoot.Text = "Calculate the arithmetic root";
+            lbAccuracy.Text = "Specified accuracy:";
+            btnComplexRoot.Text = "Compute complex roots";
+            button1.Text = "Calculate the analytical root";
+            lbHeader.Text = "Enter the root expression:";
+            lbAnswer.Text = "Result:";
+            btnClear.Text = "Reset";
+        }
+
+        private void bt_ch_Click(object sender, EventArgs e)
+        {
+            btnSimpleRoot.Text ="计算算术根";
+            btnAlgebRoot.Text ="计算算术根";
+            lbAccuracy.Text ="指定的准确度：";
+            btnComplexRoot.Text ="计算复杂根";
+            button1.Text ="计算分析根";
+            lbHeader.Text ="输入根表达式：";
+            lbAnswer.Text ="结果：";
+            btnClear.Text ="重置";
+        }
+
+        private void bt_h_Click(object sender, EventArgs e)
+        {
+            btnSimpleRoot.Text = "अंकगणितीय रूट की गणना करें";
+            btnAlgebRoot.Text = "अंकगणितीय रूट की गणना करें";
+            lbAccuracy.Text = "निर्दिष्ट सटीकता:";
+            btnComplexRoot.Text = "जटिल जड़ों की गणना करें";
+            button1.Text = "विश्लेषणात्मक रूट की गणना करें";
+            lbHeader.Text = "रूट अभिव्यक्ति दर्ज करें:";
+            lbAnswer.Text = "परिणाम:";
+            btnClear.Text = "रीसेट";
+        }
     }
 }

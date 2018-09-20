@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WolframAlpha.Api.v2;
+using WolframAlpha.Api.v2.Requests;
 
 namespace Calc
 {
@@ -47,6 +49,26 @@ namespace Calc
             }
            
         }
+        private async void test()
+        {
+            var b = new QueryBuilder();
+            b.AppId = "RYL6JP-T5L9Y7KKG9"; //Your API key
+            b.Input = "sqrt(a^2+2*a*b+b^2)";
+            var r = new QueryRequest();
+            var result = await r.ExecuteAsync(b.QueryUri);
+            foreach (var pod in result.Pods)
+            {
+                Console.WriteLine(pod.Title);
+                if (pod.SubPods != null)
+                {
+                    foreach (var subPod in pod.SubPods)
+                    {
+                        
+                        MessageBox.Show(string.Format("Title: {0}    PlainText: {1}", subPod.Title, subPod.PlainText));
+                    }
+                }
+            }
+        }
         private void btnCalc_Click(object sender, EventArgs e)
         {
             if(rtbPodkorennoe.Text != string.Empty)
@@ -55,7 +77,11 @@ namespace Calc
                 if(root>=0)
                 {
                     rtbAnswer.Text = SimpleRoot(root).ToString();
+                    test();
                     
+                    
+                   
+
                 }
                 else
                 {

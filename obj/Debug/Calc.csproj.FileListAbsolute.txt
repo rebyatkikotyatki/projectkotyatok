@@ -7,3 +7,14 @@ C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.Properties.Resour
 C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.csproj.GenerateResource.Cache
 C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.exe
 C:\10 триместр\Плаксин\Calc\Calc\obj\Debug\Calc.pdb
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Microsoft.Threading.Tasks.dll
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\System.Net.Http.Extensions.dll
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\System.Net.Http.Primitives.dll
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\WolframAlpha.Api.v2.dll
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Microsoft.Threading.Tasks.xml
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.xml
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\System.Net.Http.Extensions.xml
+C:\10 триместр\Плаксин\Calc\Calc\bin\Debug\System.Net.Http.Primitives.xml

@@ -174,7 +174,7 @@ namespace Calc
             rtbPodkorennoe.Clear();
             rtbAnswer.Clear();
         }
-
+        //
         private async void btnComplexRoot_Click(object sender, EventArgs e)
         {
             //var с = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);

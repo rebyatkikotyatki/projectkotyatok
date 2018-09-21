@@ -27,7 +27,7 @@ namespace Calc
             if(!Char.IsDigit(key))
             {
                 
-                if (key != ',' && key != '-')
+                if (key != ',' && key != '-' && key != '+' && key != '*' && key != '^')
                 {
                     e.Handled = true;
                 }
@@ -39,7 +39,9 @@ namespace Calc
                     }
                     else
                     {
-                        if (rtbPodkorennoe.Text.Last() == ',' || rtbPodkorennoe.Text.Contains(',') || rtbPodkorennoe.Text == "")
+                        if (rtbPodkorennoe.Text.Last() == '*' || rtbPodkorennoe.Text.Last() == '^' 
+                            || rtbPodkorennoe.Text.Last() == '+' || rtbPodkorennoe.Text.Last() == ',' 
+                            || rtbPodkorennoe.Text.Contains(',') || rtbPodkorennoe.Text == "")
                         {
                             e.Handled = true;
                         }
@@ -53,8 +55,8 @@ namespace Calc
             var b = new QueryBuilder();
             //это ключ к API который надо получать у них на сайте, каждый ключ расчитан на 2000 обращений к сайту
             b.AppId = "3V4XEQ-X7PVP274KW"; //Your API key
-            b.Input = "sqrt(a^2+2*a*b+b^2)";
-            //b.Input = string.Format("sqrt({0})", expression);
+            //b.Input = "sqrt(a^2+2*a*b+b^2)";
+            b.Input = string.Format("sqrt({0})", expression);
             //b.Input = "sqrt(i*i)";
             var r = new QueryRequest();
             var result = await r.ExecuteAsync(b.QueryUri);
@@ -88,19 +90,24 @@ namespace Calc
                 else
                 {
                     //Alternate form assuming a and b are real
-                    var pod = result.Pods.FirstOrDefault(x => x.Title.Contains("Alternate form assuming a and b are real"));
-                    if (pod.SubPods != null)
+                    var pod = result.Pods.FirstOrDefault(x => x.Title.Contains("Alternate form assuming"));
+                    if(pod != null)
                     {
-                        foreach (var subPod in pod.SubPods)
+                        if (pod.SubPods != null)
                         {
                             root1 = pod.SubPods[0].PlainText;
                         }
                     }
+                    else
+                    {
+                        pod = result.Pods.FirstOrDefault(x => x.Title.Contains("Input"));
+                        if(pod.SubPods != null)
+                        {
+                            root1 = pod.SubPods[0].PlainText;
+                        }
+                    }                    
                 }
-
-
-            }
-            
+            }            
             var exitTask = new Task<Tuple<string,string>>(() =>
             {
                 return new Tuple<string, string>(root1, root2);
@@ -115,12 +122,13 @@ namespace Calc
                 double root = double.Parse(rtbPodkorennoe.Text);
                 if(root>=0)
                 {
-                    rtbAnswer.Text = SimpleRoot(root).ToString();
+                    rtbAnswer.Text =string.Format("{0}", SimpleRoot(root).ToString());
                 }
                 else
                 {
                     MessageBox.Show("Отрицательное подкоренное выражение. Не удалось вычислить арифметический корень.\n Попробуйте вычислить комплексный корень");
-                }                
+                }
+                
             }
             else
             {
@@ -148,8 +156,7 @@ namespace Calc
             else
             {
                 MessageBox.Show("Введите подкоренное выражение");
-            }
-            
+            }          
         }
         //Самый обычный корень арифметический
         private double SimpleRoot(double root)
@@ -193,8 +200,42 @@ namespace Calc
             
             if (rtbPodkorennoe.Text != string.Empty)
             {
+                
                 var analRoot = await CalcComplexOrAnalRoot(false, rtbPodkorennoe.Text);
                 rtbAnswer.Text = string.Format("{0};", analRoot.Item1);
+            }
+            else
+            {
+                MessageBox.Show("Введите подкоренное выражение");
+            }
+        }
+
+        private void btnX_Click(object sender, EventArgs e)
+        {
+            rtbPodkorennoe.Text += "x";
+        }
+
+        private void btnY_Click(object sender, EventArgs e)
+        {
+            rtbPodkorennoe.Text += "y";
+        }
+                                 //'й'  
+        private void btnPow_Click(object sender, EventArgs e)
+        {
+            rtbPodkorennoe.Text += "^";
+        }
+
+        private void btnMult_Click(object sender, EventArgs e)
+        {
+            rtbPodkorennoe.Text += "*";
+            
+        }
+        private async void btnLongNumberRoot_Click(object sender, EventArgs e)
+        {
+            if (rtbPodkorennoe.Text != string.Empty)
+            {
+                var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+                rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
             }
             else
             {

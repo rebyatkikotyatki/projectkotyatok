@@ -36,12 +36,15 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.btnAlgebRoot = new System.Windows.Forms.Button();
             this.btnComplexRoot = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAnalRoot = new System.Windows.Forms.Button();
             this.btnX = new System.Windows.Forms.Button();
             this.btnY = new System.Windows.Forms.Button();
             this.nudAccuracy = new System.Windows.Forms.NumericUpDown();
             this.lbAccuracy = new System.Windows.Forms.Label();
             this.btnI = new System.Windows.Forms.Button();
+            this.btnPow = new System.Windows.Forms.Button();
+            this.btnMult = new System.Windows.Forms.Button();
+            this.btnLongNumberRoot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudAccuracy)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +76,7 @@
             this.rtbPodkorennoe.Margin = new System.Windows.Forms.Padding(20, 20, 3, 3);
             this.rtbPodkorennoe.Multiline = false;
             this.rtbPodkorennoe.Name = "rtbPodkorennoe";
-            this.rtbPodkorennoe.Size = new System.Drawing.Size(317, 58);
+            this.rtbPodkorennoe.Size = new System.Drawing.Size(356, 58);
             this.rtbPodkorennoe.TabIndex = 3;
             this.rtbPodkorennoe.Text = "";
             this.rtbPodkorennoe.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtbPodkorennoe_KeyPress);
@@ -81,11 +84,11 @@
             // rtbAnswer
             // 
             this.rtbAnswer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbAnswer.Location = new System.Drawing.Point(42, 243);
+            this.rtbAnswer.Location = new System.Drawing.Point(42, 287);
             this.rtbAnswer.Margin = new System.Windows.Forms.Padding(20, 20, 3, 3);
             this.rtbAnswer.Name = "rtbAnswer";
             this.rtbAnswer.ReadOnly = true;
-            this.rtbAnswer.Size = new System.Drawing.Size(317, 61);
+            this.rtbAnswer.Size = new System.Drawing.Size(356, 100);
             this.rtbAnswer.TabIndex = 4;
             this.rtbAnswer.Text = "";
             // 
@@ -93,7 +96,7 @@
             // 
             this.lbAnswer.AutoSize = true;
             this.lbAnswer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.lbAnswer.Location = new System.Drawing.Point(38, 215);
+            this.lbAnswer.Location = new System.Drawing.Point(38, 256);
             this.lbAnswer.Name = "lbAnswer";
             this.lbAnswer.Size = new System.Drawing.Size(108, 24);
             this.lbAnswer.TabIndex = 5;
@@ -102,7 +105,7 @@
             // btnClear
             // 
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnClear.Location = new System.Drawing.Point(42, 329);
+            this.btnClear.Location = new System.Drawing.Point(42, 406);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(142, 61);
             this.btnClear.TabIndex = 6;
@@ -132,16 +135,16 @@
             this.btnComplexRoot.UseVisualStyleBackColor = true;
             this.btnComplexRoot.Click += new System.EventHandler(this.btnComplexRoot_Click);
             // 
-            // button1
+            // btnAnalRoot
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(465, 329);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(259, 58);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Вычислить аналитический корень";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnAnalRoot.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnAnalRoot.Location = new System.Drawing.Point(465, 329);
+            this.btnAnalRoot.Name = "btnAnalRoot";
+            this.btnAnalRoot.Size = new System.Drawing.Size(259, 58);
+            this.btnAnalRoot.TabIndex = 9;
+            this.btnAnalRoot.Text = "Вычислить аналитический корень";
+            this.btnAnalRoot.UseVisualStyleBackColor = true;
+            this.btnAnalRoot.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnX
             // 
@@ -151,6 +154,7 @@
             this.btnX.TabIndex = 10;
             this.btnX.Text = "X";
             this.btnX.UseVisualStyleBackColor = true;
+            this.btnX.Click += new System.EventHandler(this.btnX_Click);
             // 
             // btnY
             // 
@@ -160,6 +164,7 @@
             this.btnY.TabIndex = 11;
             this.btnY.Text = "Y";
             this.btnY.UseVisualStyleBackColor = true;
+            this.btnY.Click += new System.EventHandler(this.btnY_Click);
             // 
             // nudAccuracy
             // 
@@ -198,23 +203,59 @@
             this.btnI.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnI.Location = new System.Drawing.Point(153, 120);
             this.btnI.Name = "btnI";
-            this.btnI.Size = new System.Drawing.Size(206, 31);
+            this.btnI.Size = new System.Drawing.Size(245, 31);
             this.btnI.TabIndex = 14;
             this.btnI.Text = "i (complex)";
             this.btnI.UseVisualStyleBackColor = true;
             this.btnI.Click += new System.EventHandler(this.btnI_Click);
             // 
+            // btnPow
+            // 
+            this.btnPow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnPow.Location = new System.Drawing.Point(42, 169);
+            this.btnPow.Name = "btnPow";
+            this.btnPow.Size = new System.Drawing.Size(34, 31);
+            this.btnPow.TabIndex = 15;
+            this.btnPow.Text = "^";
+            this.btnPow.UseVisualStyleBackColor = true;
+            this.btnPow.Click += new System.EventHandler(this.btnPow_Click);
+            // 
+            // btnMult
+            // 
+            this.btnMult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnMult.Location = new System.Drawing.Point(96, 169);
+            this.btnMult.Name = "btnMult";
+            this.btnMult.Size = new System.Drawing.Size(34, 31);
+            this.btnMult.TabIndex = 16;
+            this.btnMult.Text = "*";
+            this.btnMult.UseVisualStyleBackColor = true;
+            this.btnMult.Click += new System.EventHandler(this.btnMult_Click);
+            // 
+            // btnLongNumberRoot
+            // 
+            this.btnLongNumberRoot.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnLongNumberRoot.Location = new System.Drawing.Point(465, 406);
+            this.btnLongNumberRoot.Name = "btnLongNumberRoot";
+            this.btnLongNumberRoot.Size = new System.Drawing.Size(259, 61);
+            this.btnLongNumberRoot.TabIndex = 17;
+            this.btnLongNumberRoot.Text = "Вычислить корень из длинного числа";
+            this.btnLongNumberRoot.UseVisualStyleBackColor = true;
+            this.btnLongNumberRoot.Click += new System.EventHandler(this.btnLongNumberRoot_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 411);
+            this.ClientSize = new System.Drawing.Size(820, 492);
+            this.Controls.Add(this.btnLongNumberRoot);
+            this.Controls.Add(this.btnMult);
+            this.Controls.Add(this.btnPow);
             this.Controls.Add(this.btnI);
             this.Controls.Add(this.lbAccuracy);
             this.Controls.Add(this.nudAccuracy);
             this.Controls.Add(this.btnY);
             this.Controls.Add(this.btnX);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAnalRoot);
             this.Controls.Add(this.btnComplexRoot);
             this.Controls.Add(this.btnAlgebRoot);
             this.Controls.Add(this.btnClear);
@@ -241,12 +282,15 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnAlgebRoot;
         private System.Windows.Forms.Button btnComplexRoot;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAnalRoot;
         private System.Windows.Forms.Button btnX;
         private System.Windows.Forms.Button btnY;
         private System.Windows.Forms.NumericUpDown nudAccuracy;
         private System.Windows.Forms.Label lbAccuracy;
         private System.Windows.Forms.Button btnI;
+        private System.Windows.Forms.Button btnPow;
+        private System.Windows.Forms.Button btnMult;
+        private System.Windows.Forms.Button btnLongNumberRoot;
     }
 }
 

@@ -41,6 +41,7 @@
             this.btnY = new System.Windows.Forms.Button();
             this.nudAccuracy = new System.Windows.Forms.NumericUpDown();
             this.lbAccuracy = new System.Windows.Forms.Label();
+            this.btnI = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudAccuracy)).BeginInit();
             this.SuspendLayout();
             // 
@@ -140,6 +141,7 @@
             this.button1.TabIndex = 9;
             this.button1.Text = "Вычислить аналитический корень";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnX
             // 
@@ -152,9 +154,9 @@
             // 
             // btnY
             // 
-            this.btnY.Location = new System.Drawing.Point(113, 120);
+            this.btnY.Location = new System.Drawing.Point(96, 120);
             this.btnY.Name = "btnY";
-            this.btnY.Size = new System.Drawing.Size(33, 30);
+            this.btnY.Size = new System.Drawing.Size(34, 31);
             this.btnY.TabIndex = 11;
             this.btnY.Text = "Y";
             this.btnY.UseVisualStyleBackColor = true;
@@ -191,11 +193,23 @@
             this.lbAccuracy.TabIndex = 13;
             this.lbAccuracy.Text = "Заданная точность:";
             // 
+            // btnI
+            // 
+            this.btnI.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnI.Location = new System.Drawing.Point(153, 120);
+            this.btnI.Name = "btnI";
+            this.btnI.Size = new System.Drawing.Size(206, 31);
+            this.btnI.TabIndex = 14;
+            this.btnI.Text = "i (complex)";
+            this.btnI.UseVisualStyleBackColor = true;
+            this.btnI.Click += new System.EventHandler(this.btnI_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 411);
+            this.Controls.Add(this.btnI);
             this.Controls.Add(this.lbAccuracy);
             this.Controls.Add(this.nudAccuracy);
             this.Controls.Add(this.btnY);
@@ -232,6 +246,7 @@
         private System.Windows.Forms.Button btnY;
         private System.Windows.Forms.NumericUpDown nudAccuracy;
         private System.Windows.Forms.Label lbAccuracy;
+        private System.Windows.Forms.Button btnI;
     }
 }
 

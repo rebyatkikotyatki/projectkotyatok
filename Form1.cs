@@ -53,9 +53,9 @@ namespace Calc
             var b = new QueryBuilder();
             //это ключ к API который надо получать у них на сайте, каждый ключ расчитан на 2000 обращений к сайту
             b.AppId = "3V4XEQ-X7PVP274KW"; //Your API key
-            //b.Input = "sqrt(a^2+2*a*b+b^2)";
+            b.Input = "sqrt(a^2+2*a*b+b^2)";
             //b.Input = string.Format("sqrt({0})", expression);
-            b.Input = "sqrt(-10i)";
+            //b.Input = "sqrt(i*i)";
             var r = new QueryRequest();
             var result = await r.ExecuteAsync(b.QueryUri);
 
@@ -68,37 +68,37 @@ namespace Calc
                 Короче если корень из отрицательного то ячейка 6, а если там еще есть i то 7, надо как-то искать нужную колонку
                 по тайтлу скорее всего 
                  */
-                //if(typeIsComplex)
-                //{
-                //    //Здесь я беру 8ю ячейку в которой должен быть +-корень)
-                //    var pod = result.Pods[7];
-                //    if (pod.SubPods != null)
-                //    {
-                //        //привожу результат в нормальный вид
-                //        root1 = pod.SubPods[0].PlainText;
-                //        root1 = root1.Substring(1+root1.IndexOf((char)8776)); //8776 - знак приближенного
-
-                //        root2 = pod.SubPods[1].PlainText;
-                //        root2 = root2.Replace(" (principal root)", string.Empty);
-                //        root2 = root2.Substring(1 + root2.IndexOf((char)8776));
-                //        MessageBox.Show(root1);
-                //        MessageBox.Show(root2);
-
-                //    }
-                //}
-
-                foreach (var pod in result.Pods)
+                if(typeIsComplex)
                 {
-                    Console.WriteLine(pod.Title);
+                    //Здесь я беру ячейку в которой должен быть +-корень)                
+                    var pod = result.Pods.FirstOrDefault(x => x.Title.Contains("All 2nd roots of"));
+                    //MessageBox.Show(pod.Title);
+                    if (pod.SubPods != null)
+                    {
+                        //привожу результат в нормальный вид
+                        root1 = pod.SubPods[0].PlainText;
+                        root1 = root1.Replace(" (principal root)", string.Empty);
+                        root1 = root1.Substring(1 + root1.IndexOf((char)8776)); //8776 - знак приближенного
+
+                        root2 = pod.SubPods[1].PlainText;
+                        root2 = root2.Replace(" (principal root)", string.Empty);
+                        root2 = root2.Substring(1 + root2.IndexOf((char)8776));                       
+                    }
+                }
+                else
+                {
+                    //Alternate form assuming a and b are real
+                    var pod = result.Pods.FirstOrDefault(x => x.Title.Contains("Alternate form assuming a and b are real"));
                     if (pod.SubPods != null)
                     {
                         foreach (var subPod in pod.SubPods)
                         {
-                            Console.WriteLine(subPod.Title);
-                            Console.WriteLine(subPod.PlainText);
+                            root1 = pod.SubPods[0].PlainText;
                         }
                     }
                 }
+
+
             }
             
             var exitTask = new Task<Tuple<string,string>>(() =>
@@ -170,17 +170,36 @@ namespace Calc
 
         private async void btnComplexRoot_Click(object sender, EventArgs e)
         {
-            var с = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
-            //if (rtbPodkorennoe.Text != string.Empty)
-            //{
-            //    var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
-            //    rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Введите подкоренное выражение");
-            //}
+            //var с = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+            if (rtbPodkorennoe.Text != string.Empty)
+            {
+                var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+                rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
+            }
+            else
+            {
+                MessageBox.Show("Введите подкоренное выражение");
+            }
 
+        }
+
+        private void btnI_Click(object sender, EventArgs e)
+        {
+            rtbPodkorennoe.Text += "i";
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            
+            if (rtbPodkorennoe.Text != string.Empty)
+            {
+                var analRoot = await CalcComplexOrAnalRoot(false, rtbPodkorennoe.Text);
+                rtbAnswer.Text = string.Format("{0};", analRoot.Item1);
+            }
+            else
+            {
+                MessageBox.Show("Введите подкоренное выражение");
+            }
         }
     }
 }

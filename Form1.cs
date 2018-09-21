@@ -27,7 +27,7 @@ namespace Calc
             if(!Char.IsDigit(key))
             {
                 
-                if (key != ',' && key != '-' && key != '+' && key != '*' && key != '^')
+                if (key != ',' && key != '-')
                 {
                     e.Handled = true;
                 }
@@ -39,9 +39,7 @@ namespace Calc
                     }
                     else
                     {
-                        if (rtbPodkorennoe.Text.Last() == '*' || rtbPodkorennoe.Text.Last() == '^' 
-                            || rtbPodkorennoe.Text.Last() == '+' || rtbPodkorennoe.Text.Last() == ',' 
-                            || rtbPodkorennoe.Text.Contains(',') || rtbPodkorennoe.Text == "")
+                        if (rtbPodkorennoe.Text.Last() == ',' || rtbPodkorennoe.Text.Contains(',') || rtbPodkorennoe.Text == "")
                         {
                             e.Handled = true;
                         }
@@ -56,8 +54,8 @@ namespace Calc
             //это ключ к API который надо получать у них на сайте, каждый ключ расчитан на 2000 обращений к сайту
             b.AppId = "3V4XEQ-X7PVP274KW"; //Your API key
             //b.Input = "sqrt(a^2+2*a*b+b^2)";
-            b.Input = string.Format("sqrt({0})", expression);
-            //b.Input = "sqrt(i*i)";
+            //b.Input = string.Format("sqrt({0})", expression);
+            b.Input = "sqrt(-10i)";
             var r = new QueryRequest();
             var result = await r.ExecuteAsync(b.QueryUri);
 
@@ -70,44 +68,39 @@ namespace Calc
                 Короче если корень из отрицательного то ячейка 6, а если там еще есть i то 7, надо как-то искать нужную колонку
                 по тайтлу скорее всего 
                  */
-                if(typeIsComplex)
+                //if(typeIsComplex)
+                //{
+                //    //Здесь я беру 8ю ячейку в которой должен быть +-корень)
+                //    var pod = result.Pods[7];
+                //    if (pod.SubPods != null)
+                //    {
+                //        //привожу результат в нормальный вид
+                //        root1 = pod.SubPods[0].PlainText;
+                //        root1 = root1.Substring(1+root1.IndexOf((char)8776)); //8776 - знак приближенного
+
+                //        root2 = pod.SubPods[1].PlainText;
+                //        root2 = root2.Replace(" (principal root)", string.Empty);
+                //        root2 = root2.Substring(1 + root2.IndexOf((char)8776));
+                //        MessageBox.Show(root1);
+                //        MessageBox.Show(root2);
+
+                //    }
+                //}
+
+                foreach (var pod in result.Pods)
                 {
-                    //Здесь я беру ячейку в которой должен быть +-корень)                
-                    var pod = result.Pods.FirstOrDefault(x => x.Title.Contains("All 2nd roots of"));
-                    //MessageBox.Show(pod.Title);
+                    Console.WriteLine(pod.Title);
                     if (pod.SubPods != null)
                     {
-                        //привожу результат в нормальный вид
-                        root1 = pod.SubPods[0].PlainText;
-                        root1 = root1.Replace(" (principal root)", string.Empty);
-                        root1 = root1.Substring(1 + root1.IndexOf((char)8776)); //8776 - знак приближенного
-
-                        root2 = pod.SubPods[1].PlainText;
-                        root2 = root2.Replace(" (principal root)", string.Empty);
-                        root2 = root2.Substring(1 + root2.IndexOf((char)8776));                       
-                    }
-                }
-                else
-                {
-                    //Alternate form assuming a and b are real
-                    var pod = result.Pods.FirstOrDefault(x => x.Title.Contains("Alternate form assuming"));
-                    if(pod != null)
-                    {
-                        if (pod.SubPods != null)
+                        foreach (var subPod in pod.SubPods)
                         {
-                            root1 = pod.SubPods[0].PlainText;
+                            Console.WriteLine(subPod.Title);
+                            Console.WriteLine(subPod.PlainText);
                         }
                     }
-                    else
-                    {
-                        pod = result.Pods.FirstOrDefault(x => x.Title.Contains("Input"));
-                        if(pod.SubPods != null)
-                        {
-                            root1 = pod.SubPods[0].PlainText;
-                        }
-                    }                    
                 }
-            }            
+            }
+            
             var exitTask = new Task<Tuple<string,string>>(() =>
             {
                 return new Tuple<string, string>(root1, root2);
@@ -122,13 +115,12 @@ namespace Calc
                 double root = double.Parse(rtbPodkorennoe.Text);
                 if(root>=0)
                 {
-                    rtbAnswer.Text =string.Format("{0}", SimpleRoot(root).ToString());
+                    rtbAnswer.Text = SimpleRoot(root).ToString();
                 }
                 else
                 {
                     MessageBox.Show("Отрицательное подкоренное выражение. Не удалось вычислить арифметический корень.\n Попробуйте вычислить комплексный корень");
-                }
-                
+                }                
             }
             else
             {
@@ -156,7 +148,8 @@ namespace Calc
             else
             {
                 MessageBox.Show("Введите подкоренное выражение");
-            }          
+            }
+            
         }
         //Самый обычный корень арифметический
         private double SimpleRoot(double root)
@@ -174,73 +167,68 @@ namespace Calc
             rtbPodkorennoe.Clear();
             rtbAnswer.Clear();
         }
-        //
+
         private async void btnComplexRoot_Click(object sender, EventArgs e)
         {
-            //var с = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
-            if (rtbPodkorennoe.Text != string.Empty)
-            {
-                var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
-                rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
-            }
-            else
-            {
-                MessageBox.Show("Введите подкоренное выражение");
-            }
+            var с = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+            //if (rtbPodkorennoe.Text != string.Empty)
+            //{
+            //    var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
+            //    rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Введите подкоренное выражение");
+            //}
 
         }
 
-        private void btnI_Click(object sender, EventArgs e)
+        private void bt_ru_Click(object sender, EventArgs e)
         {
-            rtbPodkorennoe.Text += "i";
+            btnSimpleRoot.Text = "Вычислить арифметический корень";
+            btnAlgebRoot.Text = "Вычислить арифметический корень";
+            lbAccuracy.Text = "Заданная точность:";
+            btnComplexRoot.Text = "Вычислить комплексные корни";
+            button1.Text = "Вычислить аналитический корень";
+            lbHeader.Text = "Введите подкоренное выражение:";
+            lbAnswer.Text = "Результат:";
+            btnClear.Text = "Сброс";
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void bt_eng_Click(object sender, EventArgs e)
         {
-            
-            if (rtbPodkorennoe.Text != string.Empty)
-            {
-                
-                var analRoot = await CalcComplexOrAnalRoot(false, rtbPodkorennoe.Text);
-                rtbAnswer.Text = string.Format("{0};", analRoot.Item1);
-            }
-            else
-            {
-                MessageBox.Show("Введите подкоренное выражение");
-            }
+            btnSimpleRoot.Text = "Calculate the arithmetic root";
+            btnAlgebRoot.Text = "Calculate the arithmetic root";
+            lbAccuracy.Text = "Specified accuracy:";
+            btnComplexRoot.Text = "Compute complex roots";
+            button1.Text = "Calculate the analytical root";
+            lbHeader.Text = "Enter the root expression:";
+            lbAnswer.Text = "Result:";
+            btnClear.Text = "Reset";
         }
 
-        private void btnX_Click(object sender, EventArgs e)
+        private void bt_ch_Click(object sender, EventArgs e)
         {
-            rtbPodkorennoe.Text += "x";
+            btnSimpleRoot.Text ="计算算术根";
+            btnAlgebRoot.Text ="计算算术根";
+            lbAccuracy.Text ="指定的准确度：";
+            btnComplexRoot.Text ="计算复杂根";
+            button1.Text ="计算分析根";
+            lbHeader.Text ="输入根表达式：";
+            lbAnswer.Text ="结果：";
+            btnClear.Text ="重置";
         }
 
-        private void btnY_Click(object sender, EventArgs e)
+        private void bt_h_Click(object sender, EventArgs e)
         {
-            rtbPodkorennoe.Text += "y";
-        }
-                                 //'й'  
-        private void btnPow_Click(object sender, EventArgs e)
-        {
-            rtbPodkorennoe.Text += "^";
-        }
-
-        private void btnMult_Click(object sender, EventArgs e)
-        {
-            rtbPodkorennoe.Text += "*";
-            
-        }
-        private async void btnLongNumberRoot_Click(object sender, EventArgs e)
-        {
-            if (rtbPodkorennoe.Text != string.Empty)
-            {
-                var complexRoot = await CalcComplexOrAnalRoot(true, rtbPodkorennoe.Text);
-                rtbAnswer.Text = string.Format("{0} ; {1}", complexRoot.Item1, complexRoot.Item2);
-            }
-            else
-            {
-                MessageBox.Show("Введите подкоренное выражение");
-            }
+            btnSimpleRoot.Text = "अंकगणितीय रूट की गणना करें";
+            btnAlgebRoot.Text = "अंकगणितीय रूट की गणना करें";
+            lbAccuracy.Text = "निर्दिष्ट सटीकता:";
+            btnComplexRoot.Text = "जटिल जड़ों की गणना करें";
+            button1.Text = "विश्लेषणात्मक रूट की गणना करें";
+            lbHeader.Text = "रूट अभिव्यक्ति दर्ज करें:";
+            lbAnswer.Text = "परिणाम:";
+            btnClear.Text = "रीसेट";
         }
     }
 }
